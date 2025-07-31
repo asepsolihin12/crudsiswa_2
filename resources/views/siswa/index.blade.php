@@ -10,7 +10,7 @@
     <h1><b>Halaman Utama Siswa</b></h1>
     <h3>Daftar Siswa</h3>
     <a href="/siswa/create">Tambah Siswa</a>
-    
+
     
 
     <table border="1" cellpading="10" cellspacing="0">
@@ -22,6 +22,7 @@
                 <th>ALAMAT</th>
                 <th>NO HANDPHONE</th>
                 <th>PHOTO</th>
+                <th>OPTION</th>
             </tr>
         </thead>
     </tbody>

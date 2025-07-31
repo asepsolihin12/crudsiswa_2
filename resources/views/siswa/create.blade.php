@@ -9,7 +9,7 @@
 <body>
     <h1><b>Halaman Tambah Siswa</b></h1>
     <b>Form Tambah Siswa</b>
-    <a href="/siswa">Kembali ke Daftar Siswa</a>
+    <a href="/">Kembali ke Daftar Siswa</a>
         
     <form>
         <div>
