@@ -1,10 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\StudentController;
 
 Route::get('/', function () {
-    return redirect()->route('students.index');
+    return view('siswa.index');
 });
 
-Route::resource('students', StudentController::class);
+Route::get('/siswa/create', function () {
+    return view('siswa.create');
+});
