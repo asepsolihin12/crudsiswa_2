@@ -10,6 +10,8 @@
     <h1><b>Halaman Tambah Siswa</b></h1>
     <b>Form Tambah Siswa</b>
     <a href="/">Kembali ke Daftar Siswa</a>
+    <form action ="/siswa/store" method="POST">
+            @csrf
         
     <form>
         <div>
@@ -20,9 +22,9 @@
         <div>
              <label>Kelas</label>
              <select name="kelas_id">
-                <option value="XII">XII PPLG-1</option><br>
-                <option value="XII">XII PPLG-2</option><br>
-                <option value="XII">XII PPLG-3</option><br>
+                <option value="1">XII PPLG-1</option><br>
+                <option value="2">XII PPLG-2</option><br>
+                <option value="3">XII PPLG-3</option><br>
              </select>
         </div>
         <br>
