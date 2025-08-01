@@ -16,7 +16,7 @@
     <form>
         <div>
              <label>Nama</label>
-             <input type="text" name="nama" placeholder="Masukan Nama Siswa"><br>
+             <input type="text" name="name" placeholder="Masukan Nama Siswa"><br>
         </div>
         <br>
         <div>
@@ -45,7 +45,13 @@
         <br>
         <div>
              <label>Password</label>
-             <input type="password" name="Password" placeholder="Masukan Password"><br>
+             <input type="password" name="password" placeholder="Masukan Password"><br>
+        </div>
+
+        <br>
+        <div>
+             <label>No Handphone</label>
+             <input type="tel" name="no_handphone" placeholder="Masukan No Handphone"><br>
         </div>
 
         <br>

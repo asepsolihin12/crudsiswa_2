@@ -34,7 +34,7 @@ class SiswaController extends Controller
             
         
         //masukan data ke dalam tabel user
-        User::create(datasiswa_store);
+        User::create($datasiswa_store);
 
         //arahkan user ke halaman home
         return redirect('/')->with('success', 'Data siswa berhasil ditambahkan');
