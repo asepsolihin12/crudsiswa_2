@@ -3,56 +3,56 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Clas; 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Hash; // Tambahkan untuk enkripsi password
 
 class SiswaController extends Controller
 { 
-    //fungsi untuk mengarahkan ke halaman index:sisa
+    // Fungsi untuk mengarahkan ke halaman index siswa
     public function index(){
         return view('siswa.index');
     }
 
-    // fungsi untuk mengarahkan ke halaman create:siswa
+    // Fungsi untuk mengarahkan ke halaman create siswa
     public function create(){
-        return view('siswa.create');
+        $clases = Clas::all(); 
+        return view('siswa.create', compact('clases'));
     }
 
-    //untuk store data siswa
+    // Fungsi untuk menyimpan data siswa
     public function store(Request $request){
-        // validasi data
+        // Validasi data
         $request->validate([
             'name'           => 'required',
-            'nisn'           => 'required | unique:users,nisn',
+            'nisn'           => 'required|unique:users,nisn',
             'alamat'         => 'required',
-            'email'          => 'required | unique:users,email',
+            'email'          => 'required|email|unique:users,email',
             'password'       => 'required',
-            'no_handphone'   => 'required | unique:users,no_handphone'
+            'no_handphone'   => 'required|unique:users,no_handphone',
+            'photo'          => 'required|image|mimes:jpeg,png,jpg,gif',
+            'kelas_id'       => 'required|exists:clases,id'
         ]);
-        
-        //siapkan data yang akan di masukan 
+
+        // Upload gambar terlebih dahulu
+        $photoPath = $request->file('photo')->store('profilesiswa', 'public');
+
+        // Siapkan data yang akan dimasukkan
         $datasiswa_store = [
-            'clas_id' => $request->kelas_id,
-            'name' => $request->name,
-            'photo' => 'foto.jpg',
-            'nisn' => $request->nisn,
-            'alamat' => $request->alamat,
-            'email' => $request->email,
-            'password' => $request->password,
-            'no_handphone' => $request->no_handphone
+            'clas_id'       => $request->kelas_id,
+            'name'          => $request->name,
+            'photo'         => $photoPath,
+            'nisn'          => $request->nisn,
+            'alamat'        => $request->alamat,
+            'email'         => $request->email,
+            'password'      => Hash::make($request->password),
+            'no_handphone'  => $request->no_handphone
         ];
-            
-        
-        //masukan data ke dalam tabel user
+
+        // Masukkan data ke dalam tabel users
         User::create($datasiswa_store);
 
-        //arahkan user ke halaman home
+        // Arahkan ke halaman home dengan pesan sukses
         return redirect('/')->with('success', 'Data siswa berhasil ditambahkan');
-
     }
 }
-    
-
-
-
-

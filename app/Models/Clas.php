@@ -2,20 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\User; // pastikan model User di-import
 
 class Clas extends Model
 {
-    // Nama tabel
-    protected $table = "clases";
+    use HasFactory;
 
-    // Semua kolom dapat diisi (tidak ada proteksi mass-assignment)
-    protected $guarded = [];
-
-    // Relasi ke model User
-    public function user() // disarankan pakai jamak untuk relasi hasMany
-    {
-        return $this->hasMany(User::class, 'clas_id');
-    }
+    // Tambahkan ini agar Laravel tahu nama tabel yang benar
+    protected $table = 'clases';
 }
