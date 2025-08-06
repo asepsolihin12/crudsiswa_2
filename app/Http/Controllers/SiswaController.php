@@ -11,12 +11,19 @@ class SiswaController extends Controller
 { 
     // Fungsi untuk mengarahkan ke halaman index siswa
     public function index(){
-        return view('siswa.index');
+        // siapkan data / panggil data siswa
+        $siswas = User::all();
+        
+        return view('siswa.index', compact('siswas'));
+
     }
 
     // Fungsi untuk mengarahkan ke halaman create siswa
     public function create(){
+
+        //siapkan data / panggil data
         $clases = Clas::all(); 
+
         return view('siswa.create', compact('clases'));
     }
 
@@ -25,13 +32,13 @@ class SiswaController extends Controller
         // Validasi data
         $request->validate([
             'name'           => 'required',
+            'kelas_id'       => 'required',
             'nisn'           => 'required|unique:users,nisn',
             'alamat'         => 'required',
             'email'          => 'required|email|unique:users,email',
             'password'       => 'required',
             'no_handphone'   => 'required|unique:users,no_handphone',
             'photo'          => 'required|image|mimes:jpeg,png,jpg,gif',
-            'kelas_id'       => 'required|exists:clases,id'
         ]);
 
         // Upload gambar terlebih dahulu
