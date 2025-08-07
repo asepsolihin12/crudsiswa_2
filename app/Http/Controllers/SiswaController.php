@@ -3,33 +3,30 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\Clas; 
+use App\Models\Clas;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash; // Tambahkan untuk enkripsi password
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class SiswaController extends Controller
-{ 
-    // Fungsi untuk mengarahkan ke halaman index siswa
-    public function index(){
-        // siapkan data / panggil data siswa
+{
+    // Fungsi untuk menampilkan daftar siswa
+    public function index()
+    {
         $siswas = User::all();
-        
         return view('siswa.index', compact('siswas'));
-
     }
 
-    // Fungsi untuk mengarahkan ke halaman create siswa
-    public function create(){
-
-        //siapkan data / panggil data
-        $clases = Clas::all(); 
-
+    // Fungsi untuk menampilkan form tambah siswa
+    public function create()
+    {
+        $clases = Clas::all();
         return view('siswa.create', compact('clases'));
     }
 
     // Fungsi untuk menyimpan data siswa
-    public function store(Request $request){
-        // Validasi data
+    public function store(Request $request)
+    {
         $request->validate([
             'name'           => 'required',
             'kelas_id'       => 'required',
@@ -41,10 +38,9 @@ class SiswaController extends Controller
             'photo'          => 'required|image|mimes:jpeg,png,jpg,gif',
         ]);
 
-        // Upload gambar terlebih dahulu
+        // Upload gambar ke storage/public/profilesiswa
         $photoPath = $request->file('photo')->store('profilesiswa', 'public');
 
-        // Siapkan data yang akan dimasukkan
         $datasiswa_store = [
             'clas_id'       => $request->kelas_id,
             'name'          => $request->name,
@@ -56,10 +52,25 @@ class SiswaController extends Controller
             'no_handphone'  => $request->no_handphone
         ];
 
-        // Masukkan data ke dalam tabel users
         User::create($datasiswa_store);
 
-        // Arahkan ke halaman home dengan pesan sukses
         return redirect('/')->with('success', 'Data siswa berhasil ditambahkan');
+    }
+
+    // Fungsi untuk menghapus data siswa
+    public function destroy($id)
+    {
+        $datasiswa = User::find($id);
+
+        if ($datasiswa != null) {
+            // Hapus file foto dari storage
+            Storage::disk('public')->delete($datasiswa->photo);
+
+            // Hapus data user dari database
+            
+            $datasiswa->delete();
+        }
+
+        return redirect('/')->with('success', 'Data siswa berhasil dihapus');
     }
 }
