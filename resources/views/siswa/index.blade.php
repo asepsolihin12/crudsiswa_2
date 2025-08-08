@@ -36,7 +36,9 @@
                 <td>
                     <a onclick="return confirm ('apa yakinnnn?')" href="/siswa/delete/{{$siswa->id}}">HAPUS</a>
                     |
-                    <a href="/siswa/{{ $siswa->id }}">DETAIL</a>
+                    <a href="">Edit</a>
+                    |
+                    <a href="/siswa/show/{{ $siswa->id }}">DETAIL</a>
                 </td>
             </tr>
             @endforeach
