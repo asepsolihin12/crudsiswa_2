@@ -20,6 +20,7 @@ class SiswaController extends Controller
     // Menampilkan form tambah siswa
     public function create()
     {
+        // siapkan data / panggil data kelas
         $clases = Clas::all();
         return view('siswa.create', compact('clases'));
     }
@@ -27,6 +28,7 @@ class SiswaController extends Controller
     // Menyimpan data siswa
     public function store(Request $request)
     {
+        // validasi data
         $request->validate([
             'name'          => 'required',
             'kelas_id'      => 'required',
@@ -42,7 +44,7 @@ class SiswaController extends Controller
         $photoPath = $request->file('photo')->store('profilesiswa', 'public');
 
         $datasiswa_store = [
-            'clas_id'       => $request->kelas_id, // Pastikan kolom ini sesuai database
+            'clas_id'       => $request->kelas_id,
             'name'          => $request->name,
             'photo'         => $photoPath,
             'nisn'          => $request->nisn,
@@ -73,15 +75,51 @@ class SiswaController extends Controller
     // Menampilkan detail siswa
     public function show($id)
     {
-        //cari data user di database berdasarkan id user
         $datauser = User::find($id);
-        
-        //cek apakah datanya ada atau tidak 
+
         if ($datauser == null) {
             return redirect('/');
         }
 
-        //kembalikan user ke halaman show dan kirimkan data user yang di ambi berdasarkan id
         return view('siswa.show', compact('datauser'));
+    }
+
+    // Menampilkan form edit siswa
+    public function edit($id)
+    {
+        $clases = Clas::all();
+        $datauser = User::find($id);
+
+        return view('siswa.edit', compact('clases', 'datauser'));
+    }
+
+    // Update data siswa
+    public function update(Request $request, $id)
+    {
+        // validasi data
+        $request->validate([
+            'name'          => 'required',
+            'kelas_id'      => 'required',
+            'nisn'          => 'required',
+            'alamat'        => 'required',
+            'email'         => 'required|email',
+            'no_handphone'  => 'required',
+        ]);
+
+        $datasiswa = User::find($id);
+
+
+        $datasiswa_update = [
+            'clas_id'       => $request->kelas_id,
+            'name'          => $request->name,
+            'nisn'          => $request->nisn,
+            'alamat'        => $request->alamat,
+            'email'         => $request->email,
+            'no_handphone'  => $request->no_handphone
+        ];
+
+        $datasiswa->update($datasiswa_update);
+
+        return redirect('/');
     }
 }

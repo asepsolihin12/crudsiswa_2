@@ -10,6 +10,7 @@
     <h3>Daftar Siswa</h3>
     <a href="/siswa/create">Tambah Siswa</a>
 
+
     <table border="1" cellpadding="10" cellspacing="0">
         <thead>
             <tr>
@@ -36,7 +37,7 @@
                 <td>
                     <a onclick="return confirm ('apa yakinnnn?')" href="/siswa/delete/{{$siswa->id}}">HAPUS</a>
                     |
-                    <a href="">Edit</a>
+                    <a href="/siswa/edit/{{ $siswa->id }}">Edit</a>
                     |
                     <a href="/siswa/show/{{ $siswa->id }}">DETAIL</a>
                 </td>
