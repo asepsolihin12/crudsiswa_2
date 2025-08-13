@@ -118,6 +118,21 @@ class SiswaController extends Controller
             'no_handphone'  => $request->no_handphone
         ];
 
+        //cek apakah user upload foto atau tidak
+        if ($request->password != null) {
+            $datasiswa_update['password'] = $request->password;
+        }
+
+         //cek apakah user upload foto atau tidak
+         if ($request->hasFile('photo')) {
+            // hapus foto lama
+            Storage::disk('public')->delete($datasiswa->photo);
+
+            // upload foto baru
+            $datasiswa_update['photo'] = $request->file('photo')->store('profilesiswa', 'public');
+
+        }
+
         $datasiswa->update($datasiswa_update);
 
         return redirect('/');
