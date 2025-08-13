@@ -90,6 +90,10 @@ class SiswaController extends Controller
         $clases = Clas::all();
         $datauser = User::find($id);
 
+        if($datauser == null) {
+            return redirect('/');
+        }
+
         return view('siswa.edit', compact('clases', 'datauser'));
     }
 
