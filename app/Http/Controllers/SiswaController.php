@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Models\Clas;
+use App\Models\User;
+use App\Models\Kelas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -21,7 +22,7 @@ class SiswaController extends Controller
     public function create()
     {
         // siapkan data / panggil data kelas
-        $clases = Clas::all();
+        $clases = Kelas::all();
         return view('siswa.create', compact('clases'));
     }
 
@@ -87,7 +88,7 @@ class SiswaController extends Controller
     // Menampilkan form edit siswa
     public function edit($id)
     {
-        $clases = Clas::all();
+        $clases = Kelas::all();
         $datauser = User::find($id);
 
         if($datauser == null) {
